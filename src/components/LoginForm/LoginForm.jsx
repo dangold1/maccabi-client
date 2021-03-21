@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -15,7 +15,8 @@ import { useHistory } from "react-router-dom";
 import { SIGNIN_USER_API } from "../../utils/keys";
 import axiosService from "../../services/axios.service";
 import localStorageService from "../../services/localStorage.service";
-
+import { useDispatch } from "react-redux";
+import { setLoginUserAction } from "../../store/actions/usersActions";
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -43,12 +44,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LoginForm = (props) => {
+const LoginForm = () => {
   const classes = useStyles();
-  const { register, handleSubmit } = useForm();
   const history = useHistory();
+  const dispatch = useDispatch();
+  const { register, handleSubmit } = useForm();
   const [error, setError] = useState(false);
 
+  // handle onSubmit save loged user to localStorage & redux-store
   const onSubmit = async (data) => {
     try {
       const response = await axiosService.send({
@@ -57,10 +60,12 @@ const LoginForm = (props) => {
         data,
       });
       localStorageService.saveUser(response.data);
+      dispatch(setLoginUserAction(response.data));
       setError(false);
+
+      // redirect to users table
       history.push("/user-panel");
     } catch (err) {
-      console.log(err);
       setError(err.message);
     }
   };
@@ -68,13 +73,17 @@ const LoginForm = (props) => {
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
+
+      {/*Login header */}
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Sign In
         </Typography>
+
+        {/* form */}
         <form
           className={classes.form}
           noValidate
@@ -86,10 +95,10 @@ const LoginForm = (props) => {
             inputRef={register}
             required
             fullWidth
-            id="username"
-            label="Username"
-            name="username"
-            autoComplete="username"
+            id="email"
+            label="Email"
+            name="email"
+            autoComplete="email"
             autoFocus
           />
           <TextField
@@ -121,6 +130,8 @@ const LoginForm = (props) => {
             </Grid>
           </Grid>
         </form>
+
+        {/* Error alert if error */}
         <div className={classes.alert}>
           {error && (
             <Alert severity="error" onClose={() => setError(false)}>

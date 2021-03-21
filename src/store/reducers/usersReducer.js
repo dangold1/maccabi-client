@@ -6,7 +6,7 @@ import {
 
 const initialState = { users: [], isLoading: false, error: null };
 
-export default function rootSagaReducer(state = initialState, action) {
+export default function usersReducer(state = initialState, action) {
     switch (action.type) {
         case USERS_REQUSET_LOADING:
             return {

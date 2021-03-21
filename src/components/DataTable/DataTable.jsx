@@ -2,7 +2,7 @@ import React from "react";
 import { DataGrid } from "@material-ui/data-grid";
 
 const fields = [
-  { field: "id", headerName: "ID", flex: 1 },
+  { field: "email", headerName: "Email", flex: 1 },
   { field: "username", headerName: "Username", flex: 1 },
   {
     field: "age",

@@ -7,13 +7,17 @@ import {
   LoadingSpinner,
   ErrorAlert,
 } from "../components/StateComponents/StateComponents";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { loadUsersAction } from "../store/actions/usersActions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: theme.spacing(8),
     flexGrow: 1,
+  },
+  contentCenter: {
+    margin: "0 auto",
+    marginTop: 20,
   },
   grid: {
     marginTop: theme.spacing(5),
@@ -22,33 +26,44 @@ const useStyles = makeStyles((theme) => ({
 
 const UsersPage = () => {
   const classes = useStyles();
-  const { isLoading, users, error } = useSelector((state) => state.users);
+  const { isLoading, users, error } = useSelector((state) => state.usersReducer);
+  const { loginUser } = useSelector((state) => state.authReducer);
+
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  const loadAllUsers = () => {
+    // handle load users from DB
     dispatch(loadUsersAction());
+  };
+
+  useEffect(() => {
+    loadAllUsers();
   }, []);
 
-  if (isLoading)
+  if (isLoading) {
     return (
-      <Container maxWidth="md" className={classes.root}>
+      <div className={classes.contentCenter}>
         <LoadingSpinner />
-      </Container>
+      </div>
     );
+  }
 
   if (!isLoading && error) {
     return (
-      <Container maxWidth="md" className={classes.root}>
+      <div className={classes.contentCenter}>
         <ErrorAlert error={error} />
-      </Container>
+      </div>
     );
   }
 
   return (
     <Container maxWidth="md" className={classes.root}>
       <Typography gutterBottom variant="headline" component="h2">
-        Users Table
-      </Typography> 
+        Hello {loginUser?.username || "Guest"}!
+      </Typography>
+      <Typography gutterBottom variant="headline" component="h3">
+        You Can See All Users
+      </Typography>
       <Grid container justify="center" className={classes.grid}>
         <DataTable data={users} />
       </Grid>
@@ -57,3 +72,4 @@ const UsersPage = () => {
 };
 
 export default UsersPage;
+

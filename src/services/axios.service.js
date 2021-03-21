@@ -12,6 +12,7 @@ const getAxiosRequest = (method) => {
     }
 }
 
+// handle flexible axios methods
 axiosService.send = async ({ method = "get", url, data, ...restOptions }) => {
     try {
         const axiosRequest = getAxiosRequest(method);
