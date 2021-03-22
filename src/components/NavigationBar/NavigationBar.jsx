@@ -33,7 +33,7 @@ export default function NavigationBar() {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <Link to="/user-panel" className={classes.link}>
+          <Link to="/" className={classes.link}>
             <Button color="inherit">Users Table</Button>
           </Link>
           <div className={classes.buttonsDivider}></div>
@@ -49,7 +49,7 @@ export default function NavigationBar() {
               Sign Out
             </Button>
           ) : (
-            <Link to="/" className={classes.link}>
+            <Link to="/login" className={classes.link}>
               <Button color="inherit">Sign In</Button>
             </Link>
           )}

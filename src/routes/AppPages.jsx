@@ -6,9 +6,9 @@ import UsersPage from "../pages/UsersPage";
 function AppPages() {
   return (
     <Switch>
-      <Route exact path="/" render={(props) => <LoginForm {...props} />} />
+      <Route exact path="/" render={(props) => <UsersPage {...props} />} />
+      <Route exact path="/login" render={(props) => <LoginForm {...props} />} />
       <Route path="/register" render={(props) => <RegisterForm {...props} />} />
-      <Route path="/user-panel" render={(props) => <UsersPage {...props} />} />
     </Switch>
   );
 }

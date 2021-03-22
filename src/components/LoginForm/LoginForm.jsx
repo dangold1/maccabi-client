@@ -64,7 +64,7 @@ const LoginForm = () => {
       setError(false);
 
       // redirect to users table
-      history.push("/user-panel");
+      history.push("/");
     } catch (err) {
       setError(err.message);
     }

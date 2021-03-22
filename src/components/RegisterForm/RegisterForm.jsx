@@ -154,11 +154,11 @@ const RegisterForm = () => {
           <Grid container>
             <Grid item>
               {loginUser ? (
-                <Link to="/" onClick={signOut} variant="body2">
+                <Link to="/login" onClick={signOut} variant="body2">
                   Connect from other user? Sign Out
                 </Link>
               ) : (
-                <Link to="/" variant="body2">
+                <Link to="/login" variant="body2">
                   Already have an account? Sign In
                 </Link>
               )}
